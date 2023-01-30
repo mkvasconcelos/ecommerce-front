@@ -8,8 +8,10 @@ export default function Loading() {
       <ReactLoading
         type={"bars"}
         color={"#f9d342"}
-        height={"30%"}
-        width={"30%"}
+        max-height={"50px"}
+        height={"20%"}
+        max-width={"50px"}
+        width={"20%"}
       />
     </LoadingStyled>
   );

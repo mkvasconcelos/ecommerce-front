@@ -56,6 +56,16 @@ export default function Admin() {
             ))}
           </>
         )}
+        <div>
+          <button>
+            <h1
+              onClick={() => {
+                navigate("/admin-add");
+              }}>
+              ADICIONAR OUTROS MODELOS!
+            </h1>
+          </button>
+        </div>
       </main>
       <Footer />
     </ContainerStyle>
@@ -71,7 +81,24 @@ const ContainerStyle = styled.div`
     margin: 10px 0 10px 0;
   }
   main {
-    padding: 50px 0 50px 0;
+    padding: 60px 0 60px 0;
+  }
+  main div:last-child {
+    display: flex;
+  }
+  button {
+    margin: 20px auto 10px auto;
+    box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
+    background-color: #f9d342;
+    color: #292826;
+    border: none;
+    height: fit-content;
+    padding-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  button:hover {
+    box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.6);
   }
   aside {
     display: flex;

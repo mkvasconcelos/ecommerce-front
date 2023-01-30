@@ -63,36 +63,38 @@ export default function Item() {
   return (
     <ContainerStyle>
       <Header />
-      <ItemStyle key={items._id}>
-        <img src={items.imageItem} alt={items.nameItem} />
-        <div>
+      <main>
+        <ItemStyle key={items._id}>
+          <img src={items.imageItem} alt={items.nameItem} />
           <div>
-            <h2>
-              <span>{items.nameItem}</span>
-            </h2>
-            <h2>R$ {items.valueItem}</h2>
-          </div>
-          <button>
-            <h1 onClick={chooseItem}>SELECIONAR!</h1>
-          </button>
-        </div>
-      </ItemStyle>
-      <aside>
-        {otherItems.map((i) => (
-          <OtherItemStyle
-            key={i._id}
-            onClick={() => {
-              navigate(`/${i._id}`);
-            }}>
-            <img src={i.imageItem} alt={i.nameItem} />
             <div>
               <h2>
-                <span>{i.nameItem}</span>
+                <span>{items.nameItem}</span>
               </h2>
+              <h2>R$ {items.valueItem}</h2>
             </div>
-          </OtherItemStyle>
-        ))}
-      </aside>
+            <button>
+              <h1 onClick={chooseItem}>SELECIONAR!</h1>
+            </button>
+          </div>
+        </ItemStyle>
+        <aside>
+          {otherItems.map((i) => (
+            <OtherItemStyle
+              key={i._id}
+              onClick={() => {
+                navigate(`/${i._id}`);
+              }}>
+              <img src={i.imageItem} alt={i.nameItem} />
+              <div>
+                <h2>
+                  <span>{i.nameItem}</span>
+                </h2>
+              </div>
+            </OtherItemStyle>
+          ))}
+        </aside>
+      </main>
       <Footer />
     </ContainerStyle>
   );
@@ -101,7 +103,9 @@ export default function Item() {
 const ContainerStyle = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  main {
+    padding: 50px 0 50px 0;
+  }
   aside {
     display: flex;
     width: 100%;

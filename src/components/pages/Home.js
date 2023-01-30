@@ -27,21 +27,23 @@ export default function Home() {
   return (
     <ContainerStyle>
       <Header />
-      {items.map((i) => (
-        <ItemStyle
-          key={i._id}
-          onClick={() => {
-            navigate(`/${i._id}`);
-          }}>
-          <img src={i.imageItem} alt={i.nameItem} />
-          <div>
-            <h2>
-              <span>{i.nameItem}</span>
-            </h2>
-            <h2>R$ {i.valueItem}</h2>
-          </div>
-        </ItemStyle>
-      ))}
+      <main>
+        {items.map((i) => (
+          <ItemStyle
+            key={i._id}
+            onClick={() => {
+              navigate(`/${i._id}`);
+            }}>
+            <img src={i.imageItem} alt={i.nameItem} />
+            <div>
+              <h2>
+                <span>{i.nameItem}</span>
+              </h2>
+              <h2>R$ {i.valueItem}</h2>
+            </div>
+          </ItemStyle>
+        ))}
+      </main>
       <Footer />
     </ContainerStyle>
   );
@@ -49,14 +51,20 @@ export default function Home() {
 
 const ContainerStyle = styled.div`
   display: flex;
-  margin: 50px 0 50px 0;
   justify-content: center;
   flex-wrap: wrap;
+  margin: 0 5% 0 5%;
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    padding: 60px 0 60px 0;
+  }
 `;
 
 const ItemStyle = styled.div`
   width: 300px;
-  margin: 10px;
+  margin: 10px auto 10px auto;
   box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   span {

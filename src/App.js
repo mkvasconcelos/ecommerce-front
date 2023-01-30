@@ -10,6 +10,7 @@ import SignUp from "./components/pages/SignUp";
 import Profile from "./components/pages/Profile";
 import AdminSignIn from "./components/pages/AdminSignIn";
 import Admin from "./components/pages/Admin";
+import AddItems from "./components/pages/AddItems";
 
 function App() {
   const [token, setToken] = useState("");
@@ -29,6 +30,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin-sign-in" element={<AdminSignIn />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin-add" element={<AddItems />} />
             </Routes>
           </BrowserRouter>
         </NameContext.Provider>

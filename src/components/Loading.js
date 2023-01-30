@@ -16,6 +16,7 @@ export default function Loading() {
 }
 
 const LoadingStyled = styled.div`
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

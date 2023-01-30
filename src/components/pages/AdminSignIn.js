@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Loading from "../Loading";
 import Input from "../Input";
 import Submit from "../Submit";
@@ -8,11 +8,13 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Header from "../Header";
 import Footer from "../Footer";
+import { IncomeContext } from "../../context/context";
 
 export default function SignIn() {
   const [pwd, setPwd] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setIncome } = useContext(IncomeContext);
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
   async function submit(e) {
@@ -24,7 +26,8 @@ export default function SignIn() {
         pwd,
       });
       setLoading(false);
-      navigate("/admin", { state: res.data.income });
+      setIncome(res.data.income);
+      navigate("/admin");
     } catch (res) {
       Swal.fire({
         title: "Houve um problema com o seu acesso.",

@@ -1,18 +1,19 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { IncomeContext } from "../../context/context";
 import Footer from "../Footer";
 import Header from "../Header";
 import Loading from "../Loading";
+import { BsFillPlusSquareFill } from "react-icons/bs";
 
 export default function Admin() {
   const { REACT_APP_API_URL } = process.env;
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { state } = useLocation();
+  const { income } = useContext(IncomeContext);
   const navigate = useNavigate();
-  console.log(state);
   useEffect(() => {
     const res = axios.get(`${REACT_APP_API_URL}/items`);
     res.then((res) => {
@@ -30,32 +31,38 @@ export default function Admin() {
     <ContainerStyle>
       <Header />
       <main>
-        <h2>Faturamento: R$ {state}</h2>
-        {items.length === 0 ? (
-          <aside>
-            <article>Você não fez nenhuma compra conosco ainda.</article>{" "}
-            <article onClick={() => navigate("/")}>Voltar para a home?</article>
-          </aside>
-        ) : (
-          <>
-            {items.map((i) => (
-              <ItemStyle key={i._id}>
-                <img src={i.imageItem} alt={i.nameItem} />
-                <div>
-                  <h2>
-                    <span>{i.nameItem}</span>
-                  </h2>
-                </div>
-                <div>
-                  <h2>Qtd: {i.quantityItem}</h2>
-                </div>
-                <div>
-                  <h2>R$ {i.valueItem}</h2>
-                </div>
-              </ItemStyle>
-            ))}
-          </>
-        )}
+        <h2>Faturamento: R$ {income}</h2>
+        {items.map((i) => (
+          <ItemStyle key={i._id}>
+            <img src={i.imageItem} alt={i.nameItem} />
+            <div>
+              <h2>
+                <span>{i.nameItem}</span>
+              </h2>
+            </div>
+            <div>
+              <h2>Qtd: {i.quantityItem}</h2>
+            </div>
+            <div>
+              <h2>R$ {i.valueItem}</h2>
+            </div>
+            <div>
+              <BsFillPlusSquareFill
+                onClick={() => {
+                  navigate("/admin-update", {
+                    state: {
+                      idItem: i._id,
+                      nameItem: i.nameItem,
+                      valueItem: i.valueItem,
+                      imageItem: i.imageItem,
+                    },
+                  });
+                }}
+              />
+            </div>
+          </ItemStyle>
+        ))}
+
         <div>
           <button>
             <h1
@@ -134,7 +141,6 @@ const ItemStyle = styled.div`
   padding: 10px;
   display: flex;
   box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
   span {
     font-weight: 700;
   }
@@ -150,7 +156,8 @@ const ItemStyle = styled.div`
     text-align: center;
   }
   div:last-child {
-    width: 10%;
+    width: 5%;
+    cursor: pointer;
   }
   h2 {
     font-size: 20px;

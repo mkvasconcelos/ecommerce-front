@@ -9,7 +9,7 @@ export default function Header() {
   const { token } = useContext(TokenContext);
   return (
     <HeaderStyle>
-      <h1>MyEcommerce</h1>
+      <h1>AutoMax</h1>
       <IconStyle>
         <h1>
           <BsList onClick={() => setIconClick((current) => !current)} />

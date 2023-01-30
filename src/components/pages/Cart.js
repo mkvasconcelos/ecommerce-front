@@ -136,34 +136,44 @@ export default function Cart() {
         </aside>
       ) : (
         <>
-          {cart.order.map((i) => (
-            <ItemStyle key={i._id}>
-              <img src={i.imageItem} alt={i.nameItem} />
-              <div>
-                <h2>
-                  <span>{i.nameItem}</span>
-                </h2>
-              </div>
-              <div>
-                <h2>Qtd: {i.quantityItem}</h2>
-              </div>
-              <div>
-                <h2>R$ {i.valueItem}</h2>
-              </div>
-              <div>
-                <FcCancel
-                  onClick={() => {
-                    deleteExpense(i.idItem);
-                  }}
-                />
-              </div>
-            </ItemStyle>
-          ))}
+          <aside>
+            {cart.order.map((i) => (
+              <ItemStyle key={i._id}>
+                <img src={i.imageItem} alt={i.nameItem} />
+                <div>
+                  <h2>
+                    <span>{i.nameItem}</span>
+                  </h2>
+                </div>
+                <div>
+                  <h2>Qtd: {i.quantityItem}</h2>
+                </div>
+                <div>
+                  <h2>
+                    R${" "}
+                    {i.valueItem.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </h2>
+                </div>
+                <div>
+                  <FcCancel
+                    onClick={() => {
+                      deleteExpense(i.idItem);
+                    }}
+                  />
+                </div>
+              </ItemStyle>
+            ))}
+          </aside>
           <main>
             <button>
               <h1 onClick={() => payCart()}>PAGAR!</h1>
             </button>
-            <h3>TOTAL: R$ {total}</h3>
+            <h3>
+              TOTAL: R${" "}
+              {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </h3>
             <div>
               <BsTrash
                 onClick={() => {
@@ -214,6 +224,10 @@ const ContainerStyle = styled.div`
   }
   button:hover {
     box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.6);
+  }
+  aside {
+    flex-direction: column;
+    justify-content: center;
   }
   main {
     display: flex;

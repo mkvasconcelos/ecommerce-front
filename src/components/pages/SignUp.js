@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Loading from "../Loading";
 import Input from "../Input";
 import Submit from "../Submit";
 import { ContainerSignStyled, FormStyled } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { NameContext } from "../../context/context";
 import Swal from "sweetalert2";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -16,7 +15,7 @@ export default function SignUp() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const { name, setName } = useContext(NameContext);
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
   async function submit(e) {

@@ -5,7 +5,7 @@ import Submit from "../Submit";
 import { ContainerSignStyled, FormStyled } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { NameContext, TokenContext } from "../../context/context";
+import { TokenContext } from "../../context/context";
 import Swal from "sweetalert2";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -15,7 +15,6 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { setToken } = useContext(TokenContext);
-  const { setName } = useContext(NameContext);
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
   async function submit(e) {
@@ -28,7 +27,6 @@ export default function SignIn() {
       });
       setLoading(false);
       setToken(res.data.token);
-      setName(res.data.name);
       navigate("/");
     } catch (res) {
       Swal.fire({

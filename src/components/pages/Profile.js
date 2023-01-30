@@ -2,65 +2,90 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { NameContext, TokenContext } from "../../context/context";
+import { TokenContext } from "../../context/context";
 import Footer from "../Footer";
 import Header from "../Header";
 import Loading from "../Loading";
 
 export default function Profile() {
   const { REACT_APP_API_URL } = process.env;
-  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
   const { token } = useContext(TokenContext);
-  const { name } = useContext(NameContext);
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {
       return navigate("/sign-in");
     }
-    const res = axios.get(`${REACT_APP_API_URL}/cart`, {
+    const res = axios.get(`${REACT_APP_API_URL}/users`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     res.then((res) => {
-      setCart(res.data);
+      setOrders(res.data.order);
+      setName(res.data.name);
       setLoading(true);
     });
     res.catch(() => {
       console.log("Error");
     });
   }, [REACT_APP_API_URL, navigate, token]);
+  function date(date) {
+    const year = date.split("-")[0];
+    const month = date.split("-")[1];
+    const day = date.split("-")[2].split("T")[0];
+    return `${day}/${month}/${year}`;
+  }
   if (!loading) {
     return <Loading />;
   }
   return (
     <ContainerStyle>
       <Header />
-      <h1>Olá, {name}</h1>
-      {cart.order.length === 0 ? (
-        <aside>
-          <article>Você não fez nenhuma compra conosco ainda.</article>{" "}
-          <article onClick={() => navigate("/")}>Voltar para a home?</article>
-        </aside>
-      ) : (
-        <>
-          {cart.order.map((i) => (
-            <ItemStyle key={i._id}>
-              <img src={i.imageItem} alt={i.nameItem} />
-              <div>
-                <h2>
-                  <span>{i.nameItem}</span>
-                </h2>
-              </div>
-              <div>
-                <h2>Qtd: {i.quantityItem}</h2>
-              </div>
-              <div>
-                <h2>R$ {i.valueItem}</h2>
-              </div>
-            </ItemStyle>
-          ))}
-        </>
-      )}
+      <main>
+        <h1>Olá, {name}</h1>
+        {orders.length === 0 ? (
+          <aside>
+            <article>Você não fez nenhuma compra conosco ainda.</article>{" "}
+            <article onClick={() => navigate("/")}>Voltar para a home?</article>
+          </aside>
+        ) : (
+          <>
+            {orders.map((o, index) => (
+              <nav key={index}>
+                <div>
+                  <div>
+                    Pedido #{index + 1} - Data: {date(o.date)}
+                  </div>
+                </div>
+                <div>
+                  {o.orders.map((i) => (
+                    <ItemStyle key={i._id}>
+                      <img src={i.imageItem} alt={i.nameItem} />
+                      <div>
+                        <h2>
+                          <span>{i.nameItem}</span>
+                        </h2>
+                      </div>
+                      <div>
+                        <h2>Qtd: {i.quantityItem}</h2>
+                      </div>
+                      <div>
+                        <h2>
+                          R${" "}
+                          {i.valueItem.toLocaleString("pt-BR", {
+                            minimumFractionDigits: 2,
+                          })}
+                        </h2>
+                      </div>
+                    </ItemStyle>
+                  ))}
+                </div>
+              </nav>
+            ))}
+          </>
+        )}
+      </main>
       <Footer />
     </ContainerStyle>
   );
@@ -71,13 +96,21 @@ const ContainerStyle = styled.div`
   flex-direction: column;
   width: 100%;
   justify-content: space-between;
-  margin-top: 100px;
-  aside {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  main {
+    padding: 100px;
   }
+  main h1 {
+    color: #f9d342;
+  }
+  nav > div:first-child {
+    padding: 10px 0 10px 0;
+    display: flex;
+  }
+  nav > div:first-child > div:last-child {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
   article {
     margin-bottom: 10px;
   }
@@ -104,6 +137,7 @@ const ContainerStyle = styled.div`
 const ItemStyle = styled.div`
   width: 100%;
   padding: 10px;
+  margin-bottom: 10px;
   display: flex;
   box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
@@ -120,9 +154,6 @@ const ItemStyle = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
-  div:last-child {
-    width: 10%;
   }
   h2 {
     font-size: 20px;

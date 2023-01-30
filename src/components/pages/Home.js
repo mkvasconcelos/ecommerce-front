@@ -39,7 +39,12 @@ export default function Home() {
               <h2>
                 <span>{i.nameItem}</span>
               </h2>
-              <h2>R$ {i.valueItem}</h2>
+              <h2>
+                R${" "}
+                {i.valueItem.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </h2>
             </div>
           </ItemStyle>
         ))}

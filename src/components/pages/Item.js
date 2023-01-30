@@ -71,7 +71,12 @@ export default function Item() {
               <h2>
                 <span>{items.nameItem}</span>
               </h2>
-              <h2>R$ {items.valueItem}</h2>
+              <h2>
+                R${" "}
+                {items.valueItem.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </h2>
             </div>
             <button>
               <h1 onClick={chooseItem}>SELECIONAR!</h1>

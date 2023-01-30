@@ -31,7 +31,10 @@ export default function Admin() {
     <ContainerStyle>
       <Header />
       <main>
-        <h2>Faturamento: R$ {income}</h2>
+        <h2>
+          Faturamento: R${" "}
+          {income.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+        </h2>
         {items.map((i) => (
           <ItemStyle key={i._id}>
             <img src={i.imageItem} alt={i.nameItem} />
@@ -44,7 +47,12 @@ export default function Admin() {
               <h2>Qtd: {i.quantityItem}</h2>
             </div>
             <div>
-              <h2>R$ {i.valueItem}</h2>
+              <h2>
+                R${" "}
+                {i.valueItem.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </h2>
             </div>
             <div>
               <BsFillPlusSquareFill

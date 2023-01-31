@@ -9,6 +9,7 @@ import Loading from "../Loading";
 
 export default function Profile() {
   const { REACT_APP_API_URL } = process.env;
+  const [ordersEnabled, setOrdersEnabled] = useState([]);
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
   const { token } = useContext(TokenContext);
@@ -105,12 +106,14 @@ const ContainerStyle = styled.div`
   nav > div:first-child {
     padding: 10px 0 10px 0;
     display: flex;
+    box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    cursor: pointer;
   }
   nav > div:first-child > div:last-child {
     margin-left: 20px;
     cursor: pointer;
   }
-
   article {
     margin-bottom: 10px;
   }

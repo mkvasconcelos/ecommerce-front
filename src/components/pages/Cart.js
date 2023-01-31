@@ -137,8 +137,8 @@ export default function Cart() {
       ) : (
         <>
           <aside>
-            {cart.order.map((i) => (
-              <ItemStyle key={i._id}>
+            {cart.order.map((i, index) => (
+              <ItemStyle key={index}>
                 <img src={i.imageItem} alt={i.nameItem} />
                 <div>
                   <h2>
@@ -232,6 +232,7 @@ const ContainerStyle = styled.div`
   main {
     display: flex;
     justify-content: space-evenly;
+    padding-bottom: 50px;
     align-items: center;
   }
   main div {

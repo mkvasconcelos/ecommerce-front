@@ -138,6 +138,9 @@ const ContainerStyle = styled.div`
     button h1 {
       font-size: 20px;
     }
+    h2 {
+      font-size: 20px;
+    }
     h3 {
       font-size: 12px;
     }

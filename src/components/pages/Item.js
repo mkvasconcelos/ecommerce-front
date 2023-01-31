@@ -154,6 +154,14 @@ const ItemStyle = styled.div`
   button:hover {
     box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.6);
   }
+  @media (max-width: 400px) {
+    button h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+  }
 `;
 
 const OtherItemStyle = styled.div`

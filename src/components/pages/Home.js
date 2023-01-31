@@ -31,6 +31,7 @@ export default function Home() {
         {items.map((i) => (
           <ItemStyle
             key={i._id}
+            disabled={i.quantityItem === 0}
             onClick={() => {
               navigate(`/${i._id}`);
             }}>
@@ -71,7 +72,12 @@ const ItemStyle = styled.div`
   width: 300px;
   margin: 10px auto 10px auto;
   box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
   span {
     font-weight: 700;
   }

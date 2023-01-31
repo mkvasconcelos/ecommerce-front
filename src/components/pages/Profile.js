@@ -9,7 +9,6 @@ import Loading from "../Loading";
 
 export default function Profile() {
   const { REACT_APP_API_URL } = process.env;
-  const [ordersEnabled, setOrdersEnabled] = useState([]);
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
   const { token } = useContext(TokenContext);

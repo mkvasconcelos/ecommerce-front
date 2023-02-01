@@ -3,7 +3,7 @@ import Loading from "../Loading";
 import Input from "../Input";
 import Submit from "../Submit";
 import { ContainerSignStyled, FormStyled } from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Header from "../Header";
@@ -16,6 +16,11 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
+  const { state } = useLocation();
+  let idItem = "";
+  if (state) {
+    idItem = state.idItem;
+  }
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
   async function submit(e) {
@@ -31,7 +36,7 @@ export default function SignUp() {
       });
       setLoading(false);
       Swal.fire({ title: "Cadastro concluído com sucesso!", icon: "success" });
-      navigate("/sign-in");
+      navigate("/sign-in", { state: { idItem } });
     } catch (res) {
       Swal.fire({
         title: "Houve um problema com o seu acesso.",
@@ -84,7 +89,7 @@ export default function SignUp() {
         />
         <Submit type="submit" value={"Cadastrar"}></Submit>
       </FormStyled>
-      <h2 onClick={() => navigate("/sign-in")}>
+      <h2 onClick={() => navigate("/sign-in", { state: { idItem } })}>
         Já tem uma conta? Entre agora!
       </h2>
       <Footer />

@@ -3,7 +3,7 @@ import Loading from "../Loading";
 import Input from "../Input";
 import Submit from "../Submit";
 import { ContainerSignStyled, FormStyled } from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TokenContext } from "../../context/context";
 import Swal from "sweetalert2";
@@ -15,6 +15,11 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { setToken } = useContext(TokenContext);
+  const { state } = useLocation();
+  let idItem = "";
+  if (state) {
+    idItem = state.idItem;
+  }
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
   async function submit(e) {
@@ -27,7 +32,18 @@ export default function SignIn() {
       });
       setLoading(false);
       setToken(res.data.token);
-      navigate("/");
+      if (idItem) {
+        await axios.post(
+          `${REACT_APP_API_URL}/cart/${idItem}`,
+          {
+            quantityItem: 1,
+          },
+          { headers: { Authorization: `Bearer ${res.data.token}` } }
+        );
+        navigate("/cart");
+      } else {
+        navigate("/");
+      }
     } catch (res) {
       Swal.fire({
         title: "Houve um problema com o seu acesso.",
@@ -60,7 +76,9 @@ export default function SignIn() {
         />
         <Submit type="submit" value={"Entrar"}></Submit>
       </FormStyled>
-      <h2 onClick={() => navigate("/sign-up")}>Primeira vez? Cadastre-se!</h2>
+      <h2 onClick={() => navigate("/sign-up", { state: { idItem } })}>
+        Primeira vez? Cadastre-se!
+      </h2>
       <Footer />
     </ContainerSignStyled>
   );

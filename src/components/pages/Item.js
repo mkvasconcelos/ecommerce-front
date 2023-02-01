@@ -87,6 +87,7 @@ export default function Item() {
           {otherItems.map((i) => (
             <OtherItemStyle
               key={i._id}
+              disabled={i.quantityItem === 0}
               onClick={() => {
                 navigate(`/${i._id}`);
               }}>
@@ -169,6 +170,8 @@ const OtherItemStyle = styled.div`
   margin: 10px;
   box-shadow: 0px 3px 2px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
   span {
     font-weight: 700;
   }
